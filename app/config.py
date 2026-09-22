@@ -19,8 +19,12 @@ class Settings(BaseSettings):
     CLEANUP_INTERVAL_MINUTES: int = 5
     CONVERSION_TIMEOUT_SECONDS: int = 120
     
-    # CORS
-    CORS_ORIGINS: Union[str, List[str]] = "http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000"
+    # CORS - includes local development and production Vercel frontend
+    CORS_ORIGINS: Union[str, List[str]] = (
+        "https://convertor-frontend.vercel.app,"
+        "http://localhost:5173,http://127.0.0.1:5173,"
+        "http://localhost:3000,http://127.0.0.1:3000"
+    )
     
     # Storage
     BASE_DIR: Path = Path(__file__).resolve().parent.parent
@@ -37,7 +41,9 @@ class Settings(BaseSettings):
     @classmethod
     def parse_cors_origins(cls, v: Union[str, List[str]]) -> List[str]:
         if isinstance(v, str):
-            return [origin.strip() for origin in v.split(",") if origin.strip()]
+            return [origin.strip().rstrip("/") for origin in v.split(",") if origin.strip()]
+        if isinstance(v, list):
+            return [origin.rstrip("/") for origin in v]
         return v
 
     def model_post_init(self, __context):

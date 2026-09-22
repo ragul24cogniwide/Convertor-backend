@@ -9,7 +9,7 @@ services:
     container_name: convertor-backend
     restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "8103:8100"
     environment:
       - APP_ENV=production
       - MAX_FILE_SIZE_MB=100
