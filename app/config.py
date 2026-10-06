@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     APP_NAME: str = "Private Document Converter"
     APP_ENV: str = "development"
     APP_HOST: str = "0.0.0.0"
-    APP_PORT: int = 8000
+    APP_PORT: int = 8103
     
     # File limits
     MAX_FILE_SIZE_MB: int = 100
@@ -19,8 +19,9 @@ class Settings(BaseSettings):
     CLEANUP_INTERVAL_MINUTES: int = 5
     CONVERSION_TIMEOUT_SECONDS: int = 120
     
-    # CORS - includes local development and production Vercel frontend
+    # CORS - includes deployed frontend and local development
     CORS_ORIGINS: Union[str, List[str]] = (
+        "http://20.235.56.85:3221,"
         "https://convertor-frontend.vercel.app,"
         "http://localhost:5173,http://127.0.0.1:5173,"
         "http://localhost:3000,http://127.0.0.1:3000"
